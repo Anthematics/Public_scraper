@@ -4,33 +4,23 @@ let request = require('request');
 let cheerio = require('cheerio');
 let app     = express();
 app.get('/scrape', function(req, res){
-		url = "https://nacta.com/onesheet/?uid=12269&tmpl=component";
+		url = "PUT URL TO SCRAPE HERE CURRENTLY RETURNS ONE AS A JSON FILE";
 		request(url, function(error,response,html){
 				if(!error){
 						let $ = cheerio.load(html);
 						let agentname, agencyname , email, number;
+//all these json variables should be renamed / deleted based on your needs (ie the information you want)
 						let json = {
-								agentname: "",
-								agencyname:"",
-								email: "",
-								website: "" ,
-								number:""
+								relevent_info1: "",
+								relevent_info2:"",
+
 						};
 						// use the selector by ID to get the element for the agent name.
 						// extract the inner HTML of the element using html cheerio function
-						json.agentname = $('#OneSheetUser_lblName').html();
+						json.relevent_info1 = $('Dom class , id or other identifier').html();
 						// ^ should perform some REGEX on this name, to parse out first, middle, last names and unnecessary attributes.
 						// use the selector by CLASS to get the element for the agent name.
-						json.agencyname = $('.AgencyName').html();
-
-						// use nth child selector.
-						json.email = $(".oneSheetContactInfo>span:nth-child(3)").html();
-
-						// use selector for "a" href
-						json.website = $(".oneSheetContactInfo>a").html();
-						// console log the JSON
-						json.number = $('.oneSheetContactInfo>span:nth-child(4)').html();
-						console.log(json);
+						json.relevent_info2 = $('Domclass, id or other identifier').html();
 
 
 												fs.writeFile('agencyinfo.json', JSON.stringify(json), function(err)  {
